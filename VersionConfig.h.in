@@ -1,0 +1,5 @@
+// This header file will produce the VersionConfig.h file which will define the actual
+// values as defined in VERSION variable of the CMake recipe.
+#define VERSION_MAJOR @vgen_VERSION_MAJOR@
+#define VERSION_MINOR @vgen_VERSION_MINOR@
+#define VERSION_PATCH @vgen_VERSION_PATCH@
