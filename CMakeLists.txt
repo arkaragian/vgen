@@ -15,9 +15,10 @@ set(CMAKE_GENERATOR 'MinGW Makefiles')
 #since we need to point to a custom opencv location we need to set the
 #OpenCV_DIR variable to a folder containing the OpenCVConfig.cmake then
 #we need to find the package.
-SET(OpenCV_DIR "C:/Users/Aris/Downloads/opencv/build")
+SET(OpenCV_DIR "C:/users/Admin/source/repos/opencv/build")
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
+
   
 # Define a target that builds the executable.
 add_executable(vgen main.cpp)
@@ -29,4 +30,6 @@ add_executable(vgen main.cpp)
 
 #Note that this inclusion must come after the target definition.
 target_include_directories(vgen PUBLIC "${PROJECT_BINARY_DIR}")
+
+target_link_libraries(vgen ${OpenCV_LIBS})
 
