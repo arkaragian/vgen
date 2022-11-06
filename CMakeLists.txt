@@ -21,7 +21,7 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 
   
 # Define a target that builds the executable.
-add_executable(vgen main.cpp)
+add_executable(vgen main.cpp ProgramArguments.h)
 
 #Since the configured file will be written into the binary tree,
 #we must add that directory to the list of paths to search for
