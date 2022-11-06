@@ -1,4 +1,7 @@
 #include <iostream>
+#include <opencv2/core/types.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <string>
 
@@ -15,13 +18,43 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  Mat image;
-  image = imread("sample.jpg");
-  if (!image.data) {
-    printf("No image data \n");
-    return -1;
+  // Tests of Video Writer
+  // cv::VideoWriter
+  // writer("test.avi",cv::VideoWriter::fourcc('H','2','6','4'),30,cv::Size(720,576),false);
+  // cv::VideoWriter
+  // writer("test.avi",cv::VideoWriter::fourcc('R','G','B','A'),30,cv::Size(720,576),false);
+  //
+  std::string filename = (std::string)argv[1] + ".avi";
+  cv::VideoWriter writer(filename, cv::VideoWriter::fourcc('M', 'P', 'G', '3'),
+                         30, cv::Size(720, 576), false);
+
+  if (!writer.isOpened()) {
+    std::cout << "Could not open video writer!" << std::endl;
   }
-  namedWindow("Display Image", WINDOW_AUTOSIZE);
-  imshow("Display Image", image);
-  waitKey(0);
+
+  // Asuming that there are 30 frames per second
+  int seconds = 15;
+  int fps     = 30;
+  for (int i = 0; i < (fps * seconds); i++) {
+    // Unsigned 8 bit color depth with one channel declared by CV_8UC1
+    cv::Mat frame = cv::Mat::zeros(576, 720, CV_8UC1);
+    int xpos      = 20 + i;
+    if (xpos > 720) {
+      xpos = xpos - 720;
+    }
+    int ypos = 20;
+    // Create a rectangle 50px x 50px
+    cv::Rect rec(xpos, ypos, 50, 50);
+    cv::Scalar cvWhite(255);
+
+    // Write the rectangle to the frame -1 indicates that it must be filled with
+    // the color
+    cv::rectangle(frame, rec, cvWhite, -1);
+    writer << frame;
+  }
+  writer.release();
+
+  // cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
+  // cv::imshow("Display Image", image);
+  // cv::waitKey(0);
 }
